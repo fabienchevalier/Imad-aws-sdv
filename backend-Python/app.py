@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 employees = [
     {
@@ -39,12 +41,12 @@ employees = [
     }
 ]
 
-@app.route('/employees', methods=['GET', 'POST'])
-def manage_employee():
+@app.route('/api/v1/employees', methods=['GET', 'POST'])
+def list_employee():
     if request.method == 'GET':
-        return jsonify({'employees': employees})
+        return jsonify(employees)
     
-    elif request.method == 'GET':
+    if request.method == 'POST':
         new_employee = {
             'id': employees[-1]['id'] + 1,
             'firstName': request.json['firstName'],
@@ -54,18 +56,26 @@ def manage_employee():
         employees.append(new_employee)
         return jsonify({'employees': new_employee}), 201
 
-@app.route('/employees/<int:employee_id>', methods=['GET', 'DELETE'])
-def delete_employee(employee_id):
+@app.route('/api/v1/employees/<int:employee_id>', methods=['GET','DELETE', 'PUT'])
+def manage_employee(employee_id):
     employee = [employee for employee in employees if employee['id'] == employee_id]
     if request.method == 'DELETE':
         employees.remove(employee[0])
         return jsonify({'result': f'{employee[0]} deleted'})
     
-    elif request.method == 'PUT':
-        
+    if request.method == 'GET':
+        return jsonify(employee[0])
     
+    if request.method == 'PUT':
+        put_employees = {
+            'id': employees[-1]['id'] + 1,
+            'firstName': request.json['firstName'],
+            'lastName': request.json['lastName'],
+            'emailId': request.json['emailId']
+        }
+        employees[employee_id]=(put_employees)
+        return jsonify({'result': f'{employee[0]} updated'})
 
-
-
+    
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8080)

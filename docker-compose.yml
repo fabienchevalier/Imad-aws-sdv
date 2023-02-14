@@ -1,0 +1,16 @@
+version: '1'
+
+services:
+  front-angular:
+    build:
+      context: front-angular/
+      dockerfile: Dockerfile
+    ports:
+      - "8090:80"
+  
+  backend:
+    build:
+      context: backend-python/
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
