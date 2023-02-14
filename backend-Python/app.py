@@ -8,9 +8,6 @@ client = MongoClient('mongodb://root:example@mongo:27017/')
 db = client["employee_db"]
 col = db["employees"]
 
-
-db_dict = []
-
 # employees = [
 #     {
 #         'id': 1,
@@ -23,10 +20,11 @@ db_dict = []
 @app.route('/api/v1/employees', methods=['GET', 'POST'])
 def list_employee():
     if request.method == 'GET':
+        db_list = []
         cursor = col.find({}, {'_id': 0})
         for i in cursor:
-                db_dict.append(i)
-        return jsonify(db_dict)
+                db_list.append(i)
+        return jsonify(db_list)
     
     if request.method == 'POST':
         req_data = request.get_json()
@@ -35,24 +33,28 @@ def list_employee():
 
 @app.route('/api/v1/employees/<int:employee_id>', methods=['GET','DELETE', 'PUT'])
 def manage_employee(employee_id):
-    employee = [employee for employee in employees if employee['id'] == employee_id]
-    if request.method == 'DELETE':
-        employees.remove(employee[0])
-        return jsonify({'result': f'{employee[0]} deleted'})
-    
     if request.method == 'GET':
-        return jsonify(employee[0])
+        db_list = []
+        cursor = col.find({}, {'_id': 0})
+        for i in cursor:
+            db_list.append(i)
+        return jsonify(db_list['id'][f'{employee_id}'])
+
+    if request.method == 'DELETE':
+        col.delete_one(
+            {
+                "id" : employee_id
+            }
+        )
+        return jsonify()
     
     if request.method == 'PUT':
-        put_employees = {
-            'id': employees[-1]['id'] + 1,
+        col.update_one({
+            "id" : employee_id,
             'firstName': request.json['firstName'],
             'lastName': request.json['lastName'],
             'emailId': request.json['emailId']
-        }
-        employees[employee_id]=(put_employees)
-        return jsonify({'result': f'{employee[0]} updated'})
+        })
 
-    
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
