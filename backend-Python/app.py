@@ -2,31 +2,44 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-products = [
+employes = [
     {
         'id': 1,
-        'title': 'Product 1',
-        'description': 'This is the first product',
-        'price': 9.99,
-        'image': 'https://example.com/product1.jpg'
+        'firstName': 'Pierre',
+        'lastName': 'Da costa',
+        'emailId': 'pierre@gmail.com'
     },
+
     {
-        'id': 2,
-        'title': 'Product 2',
-        'description': 'This is the second product',
-        'price': 19.99,
-        'image': 'https://example.com/product2.jpg'
+    'id': 2,
+    'firstName': 'Marie',
+    'lastName': 'Leblanc',
+    'emailId': 'marie@gmail.com'
     },
+
     {
-        'id': 3,
-        'title': 'Product 3',
-        'description': 'This is the third product',
-        'price': 29.99,
-        'image': 'https://example.com/product3.jpg'
+    'id': 3,
+    'firstName': 'Alexandre',
+    'lastName': 'Dubois',
+    'emailId': 'alexandre@gmail.com'
+    },
+
+    {
+    'id': 4,
+    'firstName': 'Sophie',
+    'lastName': 'Lamoureux',
+    'emailId': 'sophie@gmail.com'
+    },
+
+    {
+    'id': 5,
+    'firstName': 'Jean',
+    'lastName': 'Gagnon',
+    'emailId': 'jean@gmail.com'
     }
 ]
 
-@app.route('/products', methods=['GET', 'POST'])
+@app.route('/api/v1/employees', methods=['GET'])
 def manage_products():
     if request.method == 'GET':
         return jsonify({'products': products})
