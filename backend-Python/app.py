@@ -4,59 +4,34 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 CORS(app)
-mongo_client = MongoClient()
+client = MongoClient('mongodb://root:example@mongo:27017/')
+db = client["employee_db"]
+col = db["employees"]
 
-employees = [
-    {
-        'id': 1,
-        'firstName': 'Pierre',
-        'lastName': 'Da costa',
-        'emailId': 'pierre@gmail.com'
-    },
 
-    {
-        'id': 2,
-        'firstName': 'Marie',
-        'lastName': 'Leblanc',
-        'emailId': 'marie@gmail.com'
-    },
+db_dict = []
 
-    {
-        'id': 3,
-        'firstName': 'Alexandre',
-        'lastName': 'Dubois',
-        'emailId': 'alexandre@gmail.com'
-    },
-
-    {
-        'id': 4,
-        'firstName': 'Sophie',
-        'lastName': 'Lamoureux',
-        'emailId': 'sophie@gmail.com'
-    },
-
-    {
-        'id': 5,
-        'firstName': 'Jean',
-        'lastName': 'Gagnon',
-        'emailId': 'jean@gmail.com'
-    }
-]
+# employees = [
+#     {
+#         'id': 1,
+#         'firstName': 'Pierre',
+#         'lastName': 'Da costa',
+#         'emailId': 'pierre@gmail.com'
+#     }
+# ]
 
 @app.route('/api/v1/employees', methods=['GET', 'POST'])
 def list_employee():
     if request.method == 'GET':
-        return jsonify(employees)
+        cursor = col.find({}, {'_id': 0})
+        for i in cursor:
+                db_dict.append(i)
+        return jsonify(db_dict)
     
     if request.method == 'POST':
-        new_employee = {
-            'id': employees[-1]['id'] + 1,
-            'firstName': request.json['firstName'],
-            'lastName': request.json['lastName'],
-            'emailId': request.json['emailId']
-        }
-        employees.append(new_employee)
-        return jsonify({'employees': new_employee}), 201
+        req_data = request.get_json()
+        col.insert_one(req_data).inserted_id
+        return('', 204)
 
 @app.route('/api/v1/employees/<int:employee_id>', methods=['GET','DELETE', 'PUT'])
 def manage_employee(employee_id):
