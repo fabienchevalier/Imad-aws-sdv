@@ -23,7 +23,10 @@ def list_employee():
         for i in cursor:
                 db_list.append(i)
         req_data = request.get_json()
-        req_data['id'] = db_list[-1]['id'] + 1
+        try:
+            req_data['id'] = db_list[-1]['id'] + 1
+        except:
+            req_data['id'] = 1
         col.insert_one(req_data).inserted_id
         return('', 204)
 
