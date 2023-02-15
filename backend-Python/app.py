@@ -9,26 +9,21 @@ db = client["employee_db"]
 col = db["employees"]
 
 @app.route('/api/v1/employees', methods=['GET', 'POST'])
-def list_employee():
+def employee():
+    liste=[]
+    cursor = col.find({}, {'_id': 0})
+    liste = [i for i in cursor]
     if request.method == 'GET':
-        db_list = []
-        cursor = col.find({}, {'_id': 0})
-        for i in cursor:
-                db_list.append(i)
-        return jsonify(db_list)
-    
-    if request.method == 'POST':    
-        db_list = []
-        cursor = col.find({}, {'_id': 0})
-        for i in cursor:
-                db_list.append(i)
-        req_data = request.get_json()
+        return jsonify(liste), 200
+
+    if request.method == 'POST':   
+        data = request.get_json()
         try:
-            req_data['id'] = db_list[-1]['id'] + 1
+            data['id'] = liste[-1]['id'] + 1
         except:
-            req_data['id'] = 1
-        col.insert_one(req_data).inserted_id
-        return('', 204)
+            data['id'] = 1
+        col.insert_one(data).inserted_id
+        return jsonify(data), 200
 
 @app.route('/api/v1/employees/<int:employee_id>', methods=['GET','DELETE', 'PUT'])
 def manage_employee(employee_id):
