@@ -1,6 +1,9 @@
 # Projet DevOps angular/python
 
-`docker-compose up` puis : 
+```bash
+git pull https://github.com/fabienchevalier/fabien-aws-sdv.git
+cd fabien-aws-sdv && docker-compose up
+```
 
 - Un front-end accessible via http://localhost:8090
 - Une api backend accessible via http://localhost:8080/api/v1
