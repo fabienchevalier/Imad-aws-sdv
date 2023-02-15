@@ -1,7 +1,7 @@
 # Projet DevOps angular/python
 
 ```bash
-git pull https://github.com/fabienchevalier/fabien-aws-sdv.git
+git clone https://github.com/fabienchevalier/fabien-aws-sdv.git
 cd fabien-aws-sdv && docker-compose up
 ```
 
