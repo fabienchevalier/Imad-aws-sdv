@@ -8,3 +8,5 @@
 - Une interface web pour la base mongo db dispo sur http://localhost:8081
 
 :warning: Projet d'école
+
+:star: ça marche le 15/02/2022 :grin:
