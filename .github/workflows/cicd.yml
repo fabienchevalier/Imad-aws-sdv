@@ -20,7 +20,7 @@ jobs:
 
     - name: Install Python dependencies
       run: |
-        pwd
+        pwd && ls
         python -m pip install --upgrade pip
         cd python-Backend && pip install -r requirements.txt
     
