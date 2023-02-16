@@ -27,10 +27,12 @@ jobs:
         cd backend-Python && pip install -r requirements.txt
     
     - name: Set up MongoDB
-      uses: supercharge/mongodb-github-action@1.8.0
+      uses: docker://mongo:latest
       with:
-        mongodb-version: 6.0
-        mongodb-db: employee_db
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
+          MONGO_INITDB_DATABASE: backend
 
 
     - name: Run the API and tests
