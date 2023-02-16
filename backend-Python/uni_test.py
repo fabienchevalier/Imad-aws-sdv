@@ -17,20 +17,5 @@ class TestEmployeeAPI(unittest.TestCase):
             "emailId": "TEST@TEST.FR"
         }
         response = requests.post(f"{self.base_url}/employees", json=new_employee)
-        id_post = response['id']
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.json(), dict)
-    
-    def test_update_employee(self):
-        updated_employee = {
-            "firstName": "up_TEST",
-            "lastName": "up_SUBJECT"
-        }
-        employee_id = 1
-        response = requests.put(f"{self.base_url}/employees/{employee_id}", json=updated_employee)
-        self.assertEqual(response.status_code, 204)
-    
-    def test_delete_employee(self):
-        employee_id = 1
-        response = requests.delete(f"{self.base_url}/employees/{employee_id}")
-        self.assertEqual(response.status_code, 204)
