@@ -78,7 +78,7 @@ class EmployeeAPI:
             return make_response(response, 204)
 
 app = Flask('__name__')
-client = MongoClient('mongodb://root:example@mongo:27017/')
+client = MongoClient('mongodb://root:example@localhost:27017/')
 api = EmployeeAPI(app, client)
 
 if __name__ == '__main__':
