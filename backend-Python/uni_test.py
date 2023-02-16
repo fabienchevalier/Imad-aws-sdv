@@ -18,7 +18,6 @@ class TestEmployeeAPI(unittest.TestCase):
         }
         response = requests.post(f"{self.base_url}/employees", json=new_employee)
         id_post = response['id']
-        return id_post
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.json(), dict)
     
@@ -27,7 +26,7 @@ class TestEmployeeAPI(unittest.TestCase):
             "firstName": "up_TEST",
             "lastName": "up_SUBJECT"
         }
-        employee_id = id_post
+        employee_id = 1
         response = requests.put(f"{self.base_url}/employees/{employee_id}", json=updated_employee)
         self.assertEqual(response.status_code, 204)
     

@@ -28,7 +28,7 @@ class EmployeeAPI:
     def add_employee(self):
         data = request.get_json()
         cursor = self.col.find({}, {'_id': 0})
-        liste = [i for i in cursor]
+        liste = [i for i in cursor]            
         try:
             data['id'] = liste[-1]['id'] + 1  
         except:
