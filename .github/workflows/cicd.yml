@@ -2,9 +2,9 @@
 
 name: CI Python
 
-on: [push]
-  # push:
-  #   branches: [master]
+on:
+   push:
+     branches: [master]
 
 jobs:
   build_test:
