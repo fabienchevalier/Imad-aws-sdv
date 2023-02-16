@@ -2,8 +2,9 @@
 
 ```bash
 git clone https://github.com/fabienchevalier/fabien-aws-sdv.git
-cd fabien-aws-sdv
-git checkout master && docker-compose up
+cd fabien-aws-sdv/b
+git checkout master
+docker-compose up
 ```
 
 - Un front-end accessible via http://localhost:8090
@@ -12,3 +13,5 @@ git checkout master && docker-compose up
 - Une interface web pour la base mongo db dispo sur http://localhost:8081
 
 # CI/CD
+
+A chaque push, l'API est testée via un script uni_test.py, executé dans GitHub action. Si les tests sont OK, le backend est déployé dans la branche DEV.
