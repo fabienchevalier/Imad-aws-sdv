@@ -10,6 +10,8 @@ cd fabien-aws-sdv && docker-compose up
 - Une DB MongoDB containeurisée qui communique avec le backend via pymongo
 - Une interface web pour la base mongo db dispo sur http://localhost:8081
 
-:warning: Projet d'école
+## Changelog
 
 :star: ça marche le 15/02/2022 :grin:
+
+:star: clean du code le 16/02/2022 :check:
