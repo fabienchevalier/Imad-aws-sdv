@@ -8,58 +8,30 @@ client = MongoClient('mongodb://root:example@mongo:27017/')
 db = client["employee_db"]
 col = db["employees"]
 
-@app.route('/api/v1/employees', methods=['GET', 'POST'])
-def employee():
-    liste=[]
-    cursor = col.find({}, {'_id': 0})
-    liste = [i for i in cursor]
-    if request.method == 'GET':
-        return jsonify(liste), 200
+@app.route('/api/v1/employees', methods=['GET'])
+def get_employee():
+    return jsonify([i for i in col.find({}, {"_id":0})]), 200
 
-    if request.method == 'POST':   
-        data = request.get_json()
-        try:
-            data['id'] = liste[-1]['id'] + 1
-        except:
-            data['id'] = 1
-        col.insert_one(data).inserted_id
-        return jsonify(data), 200
+@app.route('/api/v1/employees', methods=['POST'])
+def post_employee():
+    data = request.get_json()
+    data["id"] = len([i for i in col.find({}, {"_id":0})]) + 1
+    col.insert_one(data)
+    return jsonify(data), 200
 
-@app.route('/api/v1/employees/<int:employee_id>', methods=['GET','DELETE', 'PUT'])
-def manage_employee(employee_id):
-    if request.method == 'GET':
-        cursor = col.find({}, {'_id': 0})
-        for i in cursor:
-            if i['id'] == employee_id:
-                return jsonify(i)
+@app.route("/api/v1/employees/<int:id>", methods=['GET'])
+def get_employee_id(id):
+    return [element for element in [i for i in col.find({}, {"_id":0})] if element["id"] == id][0]
 
-    if request.method == 'DELETE':
-        cursor = col.find({}, {'_id': 0})
-        for i in cursor:
-            if i['id'] == employee_id:
-                col.delete_one(
-                    {
-                        'id' : employee_id
-                    }
-                )
-        return jsonify()
+@app.route("/api/v1/employees/<int:id>", methods=['PUT'])
+def put_employee_id(id):
+    result = col.update_one({"id": int(id)}, {"$set": request.get_json()})
+    return jsonify({"result": "Employee updated"}) if result.modified_count == 1 else jsonify({"error": "Employee not found"}) 
+
+@app.route("/api/v1/employees/<int:id>", methods=['DELETE'])
+def del_employee_id(id):
+    result = col.delete_one({'id': int(id)})
+    return jsonify({'result': 'Employee deleted'}) if result.deleted_count == 1 else jsonify({'error': 'Employee not found'})
     
-    if request.method == 'PUT':
-        col.update_one(
-            {
-            'id': employee_id
-            },    
-            {
-                "$set": 
-                    {
-                        "id" : employee_id,
-                        'firstName': request.json['firstName'],
-                        'lastName': request.json['lastName'],
-                        'emailId': request.json['emailId']
-                    }
-            }
-        )
-        return jsonify()
-        
 if __name__ == '__main__':
     app.run(debug=True)
