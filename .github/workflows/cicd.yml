@@ -36,17 +36,12 @@ jobs:
 
 
     - name: Run the API and tests
-      run: |
-        cd backend-Python && flask run --host=0.0.0.0 --port=8080 &
-        python uni_test.py
-        # OUTPUT=${python uni_test.py 2>&1}
-        # echo ${OUTPUT}
-        # if [[ ${OUTPUT} | tail -1 != "OK" ]]; then
-        #   exit 1
-        # else
-        #   continue
-        # fi
-        # kill -9 `lsof -i:8080 -t`
+      uses: BerniWittmann/background-server-action@v1
+      with:
+        command: cd backend-Python && python uni_test.py
+        start: cd backend-Python && flask run --host=0.0.0.0 --port=8080
+      
+
       env:
         FLASK_ENV: development
 
