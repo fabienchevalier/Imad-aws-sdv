@@ -2,7 +2,7 @@
 
 name: TestAndDeploy
 
-on: [push]
+on: [workflow_dispatch]
 
 jobs:
   build_test:
