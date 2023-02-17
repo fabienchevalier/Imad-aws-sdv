@@ -10,5 +10,4 @@ cd backend-Python && docker-compose up
 - Une DB MongoDB containeurisée qui communique avec le backend via pymongo
 - Une interface web pour la base mongo db dispo sur http://localhost:8081
 
-
 # CI/CD
