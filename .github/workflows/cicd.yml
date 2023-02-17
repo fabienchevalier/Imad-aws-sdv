@@ -25,7 +25,7 @@ jobs:
         cd backend-python && pip install -r requirements.txt
     
     - name: Set up MongoDB
-      run: sudo docker run --name mongo -e MONGO_INITDB_ROOT_USERNAME='root' -e MONGO_INITDB_ROOT_PASSWORD='example' -e MONGO_INITDB_DATABASE='backend' -d -p 27017:27017 mongo:latest
+      run: sudo docker run --host-name mongo -e MONGO_INITDB_ROOT_USERNAME='root' -e MONGO_INITDB_ROOT_PASSWORD='example' -e MONGO_INITDB_DATABASE='backend' -d -p 27017:27017 mongo:latest
   
     - name: Run the API and tests
       uses: BerniWittmann/background-server-action@v1
