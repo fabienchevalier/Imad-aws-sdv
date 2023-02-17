@@ -10,7 +10,7 @@ services:
   
   backend:
     build:
-      context: backend-python/
+      context: backend-Python/
       dockerfile: Dockerfile
     ports:
     - "8080:8080"
