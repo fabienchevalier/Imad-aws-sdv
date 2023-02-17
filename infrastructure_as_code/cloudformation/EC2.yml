@@ -3,6 +3,7 @@ Parameters:
   KeyName:
     Type: "AWS::EC2::KeyPair::KeyName"
     Description: "Name of the EC2 key pair to use for SSH access to the instance"
+    Default: "fab-laptop"
 Resources:
   EC2Instance:
     Type: "AWS::EC2::Instance"
