@@ -52,7 +52,7 @@ jobs:
         aws cloudformation deploy \
           --stack-name EC2-CloudApp \
           --template-file infrastructure_as_code/cloudformation/EC2.yml \
-          --parameter-overrides Key=Value \
+          --parameter-overrides Key=fab-macbook \
           --region us-east-1
 
 
