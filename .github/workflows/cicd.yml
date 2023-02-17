@@ -1,6 +1,6 @@
 #CI qui teste le backend situé dans la branche master
 
-name: CI Python
+name: TestAndDeploy
 
 on:
    push:
