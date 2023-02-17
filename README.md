@@ -15,5 +15,3 @@ docker-compose up
 # CI/CD
 
 A chaque push, l'API est testée via un script uni_test.py, executé dans GitHub action. Si les tests sont OK, le backend est déployé dans la branche DEV. 
-
-# test
