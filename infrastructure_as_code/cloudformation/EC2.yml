@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  KeyName:
+    Type: "AWS::EC2::KeyPair::KeyName"
+    Description: "Name of the EC2 key pair to use for SSH access to the instance"
+Resources:
+  EC2Instance:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: "ami-0c94855ba95c71c99" # Replace with your desired AMI ID
+      InstanceType: "t2.medium"
+      KeyName: !Ref fab-macbook
+      SecurityGroups:
+        - Ref: InstanceSecurityGroup
+      UserData: !Base64 |
+        #!/bin/bash
+        sudo yum update -y && sudo amazon-linux-extras install docker -y
+        sudo service docker start
+        sudo usermod -a -G docker ec2-user
+        sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        cd /home/ec2-user
+        git clone https://github.com/fabienchevalier/fabien-aws-sdv.git && git checkout master
+        sudo docker-compose up -d
+
+  InstanceSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "Allow HTTP and SSH traffic"
+      SecurityGroupIngress:
+        - IpProtocol: "tcp"
+          FromPort: "22"
+          ToPort: "22"
+          CidrIp: "0.0.0.0/0" # Replace with your desired SSH CIDR block
+        - IpProtocol: "tcp"
+          FromPort: "80"
+          ToPort: "80"
+          CidrIp: "0.0.0.0/0" # Replace with your desired HTTP CIDR block
+
+Outputs:
+  PublicIp:
+    Description: Server Public IP
+    Value: !GetAtt EC2Instance.PublicIp
