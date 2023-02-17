@@ -3,8 +3,8 @@
 name: TestAndDeploy
 
 on:
-   push:
-     branches:
+  push:
+    branches:
       - master
 
 jobs:
