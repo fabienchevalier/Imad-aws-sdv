@@ -22,11 +22,16 @@ jobs:
       run: |
         pwd && ls
         python -m pip install --upgrade pip
-        cd backend-Python && pip install -r requirements.txt
+        cd backend-Python && pip install -r requirements.txt && cd ..
     
-    - name: Set up MongoDB
-      run: sudo docker run --host-name mongo -e MONGO_INITDB_ROOT_USERNAME='root' -e MONGO_INITDB_ROOT_PASSWORD='example' -e MONGO_INITDB_DATABASE='backend' -d -p 27017:27017 mongo:latest
-  
+    - name: Set up Compose
+      uses: isbang/compose-action@v1.4.1
+      with:
+        compose-file: "docker-compose.yml"
+        up-flags: |
+          -d
+          --build
+
     - name: Run the API and tests
       uses: BerniWittmann/background-server-action@v1
       with:
