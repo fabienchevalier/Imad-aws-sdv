@@ -1,9 +1,8 @@
-#CI qui teste le backend situé dans la branche master
-
 name: TestAndDeploy
 
 on:
-  workflow_dispatch:
+  push:
+    
 
 jobs:
   build-test:
@@ -32,7 +31,7 @@ jobs:
         
 
   deploy-to-aws:
-    needs: build_test
+    needs: build-test
     runs-on: ubuntu-latest
 
     steps:
@@ -54,8 +53,3 @@ jobs:
           --stack-name EC2-CloudApp \
           --template-file infrastructure_as_code/cloudformation/EC2.yml \
           --region us-east-1
-
-
-
-
-
