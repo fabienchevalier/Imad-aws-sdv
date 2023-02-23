@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_test:
+  build-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,7 +31,7 @@ jobs:
         python uni_test.py
         
 
-  deploy_to_aws:
+  deploy-to-aws:
     needs: build_test
     runs-on: ubuntu-latest
 
