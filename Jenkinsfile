@@ -13,9 +13,5 @@ pipeline {
                 sh 'sleep 10 && python uni_test.py'
             }
         }
-        stage('Deploy to Dev') {
-            when {
-                branch 'master'
-            }
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs:
+    }
+}

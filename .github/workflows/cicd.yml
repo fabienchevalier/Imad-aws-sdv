@@ -1,7 +1,8 @@
 name: TestAndDeploy
 
 on:
-  push:
+  workflow_dispatch:
+    
     
 
 jobs:
