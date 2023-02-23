@@ -4,8 +4,6 @@ name: TestAndDeploy
 
 on:
   workflow_dispatch:
-    branches:
-      - master
 
 jobs:
   build_test:
