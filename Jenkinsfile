@@ -5,7 +5,7 @@ pipeline {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/fabienchevalier/fabien-aws-sdv.git']]])
                 sh 'python3 -m pip install --upgrade pip && pip install requests'
-                sh 'sudo docker-compose up -d'
+                sh 'echo 1456 | sudo -S docker-compose up -d'
             }
         }
         stage('Test') {
