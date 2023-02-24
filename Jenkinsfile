@@ -18,4 +18,5 @@ pipeline {
         always {
             sh 'sudo docker-compose down'
         }
+    }
 }
