@@ -17,9 +17,16 @@ docker-compose up
 
 ## CI/CD
 
-2 jobs:
+### GitHub Actions:
 
 - Build test:
   - Teste l'api dans le runner GitHub pour garantir son fonctionnement
 - Deploy to aws:
   - Deploie l'infrastructure sur le cloud AWS via un template CloudFormation
+
+### Jenkinsfile
+
+- Stage build:
+  - Build l'application dans Docker
+- Stage test:
+  - Effectue les tests unitaire pour garantir le bon fonctionnement de l'application
